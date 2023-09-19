@@ -1,5 +1,5 @@
 body {
-    margin: 0;
+    margin: 0px 50px 0px 50px;
     padding: 0;
     font-family: Arial, sans-serif;
 }
@@ -70,10 +70,23 @@ nav a:hover {
         display: inline-block;
         padding:9px;
         transform: rotate(45deg);
-        cursor: pointer;
-       
-        
+        cursor: pointer; 
     }
+}
+
+.register-team {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 100px;
+    padding: 10px 20px;
+}
 
 
+.swatch {
+    display: inline-block;
+            width: 18px;
+            height: 18px;
+           
 }

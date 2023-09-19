@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+        <div class="row">
+            <h4>This is a title</h4>
+            <p>This is a paragraph</p>
+            <tbody>
+                <table>
+                    <caption>Registered Teams</caption>
+                {% if team %}
+                    <h2>Your Team:</h2>
+                    <p>Username: {{ team.team_id }}</p>
+                    <p>Team Name: {{ team.team_name }}</p>
+                    <p>Team Colours: <span class="team-color swatch" ></span></p>
+                    
+                {% endif %}
+                </table>
+            </tbody>
+        </div>           
+    </div>
+{% endblock %}

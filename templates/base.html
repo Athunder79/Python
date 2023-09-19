@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/style.css">
     <title>My project</title>
+
+    <style>
+        {% if team %}
+        .team-color {
+            background-color: {{ team.team_color }};
+        {% endif %}
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -17,10 +25,11 @@
         </div>
         <nav>
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Navigation 1</a></li>
-                <li><a href="#">Navigation 2</a></li>
-                <li><a href="#">Navigation 3</a></li>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('fixtures') }}">Fixtures</a></li>
+                <li><a href="{{ url_for('results') }}">Results</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('register') }}">Register Team</a></li>
             </ul>
         </nav>
     </header>

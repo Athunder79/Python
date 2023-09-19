@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main>
+    <div class="register-team">
+    <h1>Register Your Team</h1>
+
+        <form action="/submit" method="post">
+            
+            <label for="team_id">Username:</label>
+            <input type="text" id="team_id" name="team_id" required><br><br>
+       
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br><br>
+        
+            <label for="team_name">Team Name:</label>
+            <input type="text" id="team_name" name="team_name" required><br><br>
+        
+            <label for="team_color">Team Colours</label>
+            <input type="color" id="team_color" name="team_color" required><br><br>
+        
+            <!-- <label for="players">Players:</label>
+            <ul id="players">
+                <li><input type="text" name="player" required></li>
+                <li><input type="text" name="player" required></li>
+                <li><input type="text" name="player" required></li>
+                <li><input type="text" name="player" required></li>
+                <li><input type="text" name="player" required></li>
+            </ul>
+            <button type="button" id="addPlayer">Add Player</button><br><br> -->
+       
+        <input type="submit" value="Submit">
+    </form>
+    {% if team %}
+        <h2>Your Team:</h2>
+        <p>Username: {{ team.team_id }}</p>
+        <p>Team Name: {{ team.team_name }}</p>
+        <p>Team Colours: <span class="team-color swatch" ></span></p>
+        
+    {% endif %}
+</div>
+</main>
+
+{% endblock %}
