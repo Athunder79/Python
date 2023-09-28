@@ -19,7 +19,7 @@
             <label for="team_color">Team Colours</label>
             <input type="color" id="team_color" name="team_color" required><br><br>
         
-            <!-- <label for="players">Players:</label>
+            <label for="players">Players:</label>
             <ul id="players">
                 <li><input type="text" name="player" required></li>
                 <li><input type="text" name="player" required></li>
@@ -27,15 +27,18 @@
                 <li><input type="text" name="player" required></li>
                 <li><input type="text" name="player" required></li>
             </ul>
-            <button type="button" id="addPlayer">Add Player</button><br><br> -->
+            <button type="button" id="addPlayer">Add Player</button><br><br>
        
         <input type="submit" value="Submit">
     </form>
-    {% if team %}
+    {% if team_id %}
         <h2>Your Team:</h2>
-        <p>Username: {{ team.team_id }}</p>
-        <p>Team Name: {{ team.team_name }}</p>
+        <p>Team Number: {{team_id.team_no}}</p>
+        <p>Username: {{ team_id.team_id }}</p>
+        <p>Team Name: {{ team_id.team_name }}</p>
         <p>Team Colours: <span class="team-color swatch" ></span></p>
+        <p>Password: {{ team_id.password }}</p>
+        <p>Squad: {{ team_id.players }}</p>
         
     {% endif %}
 </div>

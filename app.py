@@ -1,23 +1,53 @@
-from flask import Flask, render_template, request, redirect, url_for,session
+from flask import Flask, render_template, request, redirect, url_for, session
+from models import Teams, Players
+from itertools import combinations
+import random
+
+
 
 app = Flask(__name__)
 
-class Teams:
-    def __init__(self, team_id, team_name, team_color):
-        self.team_id = team_id
-        self.team_name = team_name
-        self.team_color = team_color
-       
+allteams=[]
 
 
-@app.route('/')
-def index():    
-     return render_template('index.html')
-   
 
-@app.route('/fixtures/')
+@app.route('/', methods =['GET'])
+def index():
+     
+     return render_template('index.html', allteams=allteams)
+
+
+@app.route('/players/')
+def players():
+    return render_template('players.html')
+
+
+
+@app.route('/fixtures/', methods=['GET'])
 def fixtures():
-    return render_template('fixtures.html')
+    team_name_list = [team.team_name for team in allteams]
+    if len(team_name_list)%2 !=0:   
+        team_name_list.append('Bye')
+    
+    weeks =len(team_name_list)-1
+    half = len(team_name_list) // 2
+
+    fixtures = []
+
+    for week in range(weeks):
+        week_fixtures = []
+
+        for i in range(half):
+            team1 = team_name_list[i]
+            team2 = team_name_list[len(team_name_list) - 1 - i]
+            week_fixtures.append((team1, team2))
+
+        fixtures.append(week_fixtures)
+        team_name_list.insert(1, team_name_list.pop())
+
+
+    return render_template('fixtures.html', fixtures=fixtures,)
+
 
 @app.route('/results/')
 def results(): 
@@ -32,17 +62,23 @@ def register():
     return render_template('register.html')
 
  
-
-
-
+# Get tean data from form and add to list allteams
 
 @app.route('/submit', methods=['POST'])
 def submit():
-     team_id = request.form.get('team_id')
-     team_name = request.form.get('team_name')
-     team_color = request.form.get('team_color')
-     team = Teams(team_id, team_name, team_color)
-     return render_template('register.html', team=team)    
+    team_no = allteams.__len__()+1
+    team_id = request.form['team_id']
+    password = request.form['password']
+    team_name = request.form['team_name']
+    team_color = request.form['team_color']
+    players = request.form.getlist('player')
+
+    team_id = Teams(team_no, team_id, password, team_name, team_color, players)
+    allteams.append(team_id)
+
+  
+    return render_template('register.html', team_id=team_id)
+
 
 
 

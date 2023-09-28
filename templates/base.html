@@ -7,17 +7,19 @@
     <title>My project</title>
 
     <style>
-        {% if team %}
+        {% if team_id %}
         .team-color {
-            background-color: {{ team.team_color }};
+            background-color: {{ team_id.team_color }};
         {% endif %}
         }
+
+   
     </style>
 </head>
 <body>
     <header>
         <div class="header-logo">
-            <h1>Python project</h1>
+            <h1>5 Aside Leagues</h1>
             </div>
         <div class="header-menu">
             <p><a href="#">MENU</a></p>
@@ -39,7 +41,7 @@
     </main>
     <footer>
         <div class="footer-logo">
-            <h1>Python project</h1>  
+            <h1>5 Aside</h1>  
         </div>
        
         <div class="footer-social">

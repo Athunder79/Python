@@ -5,18 +5,23 @@
         <div class="row">
             <h4>This is a title</h4>
             <p>This is a paragraph</p>
-            <tbody>
-                <table>
-                    <caption>Registered Teams</caption>
-                {% if team %}
-                    <h2>Your Team:</h2>
-                    <p>Username: {{ team.team_id }}</p>
-                    <p>Team Name: {{ team.team_name }}</p>
-                    <p>Team Colours: <span class="team-color swatch" ></span></p>
+            <table>
+                <caption><h2>Registered Teams</h2></caption>
+                <tr>
+                    <th></th>
+                    <th>Team Name</th>
+                    <th>Team Colour</th>
                     
-                {% endif %}
-                </table>
-            </tbody>
+                </tr>
+                {% for team in allteams %}
+                <tr>
+                    <td>{{team.team_no}}</td>
+                    <td>{{team.team_name}}</td>
+                    <td class="swatch" style="background-color: {{team.team_color}};"></td>
+                </tr>
+                {% endfor %}
+          
+            </table>
         </div>           
     </div>
 {% endblock %}

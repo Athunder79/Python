@@ -1,15 +1,14 @@
 class Teams:
-    def __init__(self, team_id, team_name, team_color):
+    def __init__(self, team_no, team_id, password, team_name, team_color, players=None):
+        self.team_no = team_no
         self.team_id = team_id
+        self.password = password
         self.team_name = team_name
         self.team_color = team_color
-
- 
-    def __str__(self):
-        return str(self.__class__) + ": " + str(self.__dict__)
-
-    def __repr__(self):
-        return str(self.__class__) + ": " + str(self.__dict__)
+        self.players = players or []
+    
+    
+    
        
 
 class Players:
