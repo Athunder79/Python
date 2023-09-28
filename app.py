@@ -5,7 +5,13 @@ import random
 
 
 
+
 app = Flask(__name__)
+
+
+@app.context_processor
+def inject_enumerate():
+    return dict(enumerate=enumerate)
 
 allteams=[]
 
@@ -13,7 +19,6 @@ allteams=[]
 
 @app.route('/', methods =['GET'])
 def index():
-     
      return render_template('index.html', allteams=allteams)
 
 
@@ -44,8 +49,7 @@ def fixtures():
 
         fixtures.append(week_fixtures)
         team_name_list.insert(1, team_name_list.pop())
-
-
+    
     return render_template('fixtures.html', fixtures=fixtures,)
 
 
@@ -53,9 +57,13 @@ def fixtures():
 def results(): 
     return render_template('results.html')
 
-@app.route('/login/')
+
+
+@app.route('/login/', methods=['POST'])
 def login():
     return render_template('login.html')
+
+
 
 @app.route('/register/')
 def register():

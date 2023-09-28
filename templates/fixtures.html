@@ -2,7 +2,7 @@
 
 {% block content %}
 <main>
-    <table border="1">
+    <table>
         <thead>
             <tr>
                 <th>Week</th>
@@ -12,17 +12,15 @@
             </tr>
         </thead>
         <tbody>
-            {% for week_fixtures in fixtures %}
-            {% for fixture in week_fixtures %}
-            <tr>
+            {% for week, week_fixtures in enumerate(fixtures, start=1) %}
+                {% for fixture in week_fixtures %}
                 <tr>
-                    <td>Week {{ week }}</td>
+                    <td>{{ week }}</td>
                     <td>{{ fixture[0] }}</td>
                     <td>vs</td>
                     <td>{{ fixture[1] }}</td>
                 </tr>
-            </tr>
-            {% endfor %}
+                {% endfor %}
             {% endfor %}
         </tbody>
     </table>
