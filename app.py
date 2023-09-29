@@ -5,7 +5,6 @@ import random
 
 
 
-
 app = Flask(__name__)
 
 
@@ -17,6 +16,7 @@ allteams=[]
 
 
 
+
 @app.route('/', methods =['GET'])
 def index():
      return render_template('index.html', allteams=allteams)
@@ -25,7 +25,6 @@ def index():
 @app.route('/players/')
 def players():
     return render_template('players.html')
-
 
 
 @app.route('/fixtures/', methods=['GET'])
@@ -53,9 +52,9 @@ def fixtures():
     return render_template('fixtures.html', fixtures=fixtures,)
 
 
-@app.route('/results/')
+@app.route('/results/', methods=['GET', 'POST'])
 def results(): 
-    return render_template('results.html')
+    return render_template('results.html', fixtures=fixtures)
 
 
 
@@ -70,7 +69,7 @@ def register():
     return render_template('register.html')
 
  
-# Get tean data from form and add to list allteams
+# Get team data from form and add to list allteams
 
 @app.route('/submit', methods=['POST'])
 def submit():
@@ -87,7 +86,11 @@ def submit():
   
     return render_template('register.html', team_id=team_id)
 
-
+def user():
+    users = {}
+    for team in allteams: 
+        users[team.team_id] = team.team_name
+    return users
 
 
 
