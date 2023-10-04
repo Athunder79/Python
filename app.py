@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from models import Teams, Players
+from models import Teams, Users
 from itertools import combinations
 import random
 
@@ -13,6 +13,8 @@ def inject_enumerate():
     return dict(enumerate=enumerate)
 
 allteams=[]
+users=[]
+fixture=[]
 
 
 
@@ -27,7 +29,7 @@ def players():
     return render_template('players.html')
 
 
-@app.route('/fixtures/', methods=['GET'])
+@app.route('/fixtures/', methods=['GET','POST'])
 def fixtures():
     team_name_list = [team.team_name for team in allteams]
     if len(team_name_list)%2 !=0:   
@@ -36,7 +38,8 @@ def fixtures():
     weeks =len(team_name_list)-1
     half = len(team_name_list) // 2
 
-    fixtures = []
+    global fixture 
+    fixture= []
 
     for week in range(weeks):
         week_fixtures = []
@@ -45,16 +48,22 @@ def fixtures():
             team1 = team_name_list[i]
             team2 = team_name_list[len(team_name_list) - 1 - i]
             week_fixtures.append((team1, team2))
-
-        fixtures.append(week_fixtures)
+        
+        fixture.append(week_fixtures)
         team_name_list.insert(1, team_name_list.pop())
+        print(fixture)
+      
+        
+                              
     
-    return render_template('fixtures.html', fixtures=fixtures,)
+    return render_template('fixtures.html', fixture=fixture)
+
 
 
 @app.route('/results/', methods=['GET', 'POST'])
 def results(): 
-    return render_template('results.html', fixtures=fixtures)
+    print(fixture)
+    return render_template('results.html', fixture=fixture)
 
 
 
@@ -81,6 +90,7 @@ def submit():
     players = request.form.getlist('player')
 
     team_id = Teams(team_no, team_id, password, team_name, team_color, players)
+   
     allteams.append(team_id)
 
   

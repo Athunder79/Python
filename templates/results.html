@@ -6,26 +6,28 @@
         <thead>
             <tr>
                 <th>Week</th>
-                <th></th>
                 <th>Team 1</th>
+                <th>score</th>
                 <th></th>
-                <th></th>
+                <th>score</th>
                 <th>Team 2</th>
             </tr>
         </thead>
         <tbody>
-            {% for week, week_fixtures in enumerate(fixtures, start=1) %}
-                {% for fixture in week_fixtures %}
+            
+                {% for tie in fixture %}
+                    {%for team in tie  %}
                 <tr>
-                    <td>{{ week }}</td>        
-                    <td class="swatch"></td>     
-                    <td>{{ fixture[0] }}</td>
-                    <td>vs</td>
-                    <td class="swatch"></td>
-                    <td>{{ fixture[1] }}</td>
+                    <td></td>        
+                    <td>{{ team[0] }}</td>
+                    <td class="score-input"><input class="score-input"  type="text"></td>
+                    <td class="score-input">vs</td>
+                    <td class="score-input"><input class="score-input" type="text"></td>
+                    <td>{{ team[1] }}</td>
                 </tr>
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
+          
         </tbody>
     </table>
 </main>

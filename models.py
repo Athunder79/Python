@@ -6,22 +6,16 @@ class Teams:
         self.team_name = team_name
         self.team_color = team_color
         self.players = players or []
-    
-    def submit():
-        team_no = allteams.__len__()+1
-        team_id = request.form['team_id']
-        password = request.form['password']
-        team_name = request.form['team_name']
-        team_color = request.form['team_color']
-        players = request.form.getlist('player')
 
-        team_id = Teams(team_no, team_id, password, team_name, team_color, players)
-        allteams.append(team_id)
-  
-
+class Fixture_list:
+    def __init__(self, team_1, team_2):
+        self.team_1 = team_1
+        self.team_2 = team_2
     
-    
-    
+class Users:
+    def __init__(self, team_id, password):
+        self.team_id = team_id
+        self.password = password
     
        
 
