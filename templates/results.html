@@ -11,22 +11,30 @@
                 <th></th>
                 <th>score</th>
                 <th>Team 2</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             
                 {% for tie in fixture %}
                     {%for team in tie  %}
+                    
                 <tr>
+                <form class="register" action="/submit_results" method="post">
                     <td></td>        
-                    <td>{{ team[0] }}</td>
-                    <td class="score-input"><input class="score-input"  type="text"></td>
+                    <td>{{ team[0] }}</td><input type="hidden" id="team_1" name="team_1" value="{{ team[0] }}">
+                    <td class="score-input"><input name="team_1_goals" id="team_1_goals" class="score-input"  type="number"></td>
                     <td class="score-input">vs</td>
-                    <td class="score-input"><input class="score-input" type="text"></td>
-                    <td>{{ team[1] }}</td>
+                    <td class="score-input"><input id="team_2_goals" name="team_2_goals"class="score-input" type="number"></td>
+                    <td>{{ team[1] }}</td><input type="hidden" id="team_2" name="team_2" value="{{ team[1] }}">
+                    <td><input class="login-button" type="submit" value="Submit Score"></td>
+                </form>
                 </tr>
+                
+
                     {% endfor %}
                 {% endfor %}
+            
           
         </tbody>
     </table>

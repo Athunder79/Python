@@ -12,11 +12,23 @@ class Fixture_list:
         self.team_1 = team_1
         self.team_2 = team_2
     
-class Users:
-    def __init__(self, team_id, password):
-        self.team_id = team_id
-        self.password = password
-    
+class Results_list:
+    def __init__(self, team_1, team_2, team_1_goals=0, team_2_goals=0):
+        self.team_1 = team_1
+        self.team_2 = team_2
+        self.team_1_goals = team_1_goals
+        self.team_2_goals = team_2_goals
+
+class Table:
+    def __init__(self, team_name, points, goals_for, goals_against, goals_difference, wins, losses, draws):
+        self.team_name = team_name
+        self.points = points
+        self.goals_for = goals_for
+        self.goals_against = goals_against
+        self.goals_difference = goals_difference
+        self.wins = wins
+        self.losses = losses
+        self.draws = draws
        
 
 class Players:
