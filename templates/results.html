@@ -15,10 +15,19 @@
             </tr>
         </thead>
         <tbody>
+
+                {% for result in allresults %}
+                <tr>
+                    <td></td>
+                    <td>{{ result[0] }}</td>
+                    <td>{{ result[2] }}</td>
+                    <td>vs</td>
+                    <td>{{ result[3] }}</td>
+                    <td>{{ result[1] }}</td>
+                </tr>
+                {% endfor %}
             
-                {% for tie in fixture %}
-                    {%for team in tie  %}
-                    
+                {% for team in fixture_flat %}   
                 <tr>
                 <form class="register" action="/submit_results" method="post">
                     <td></td>        
@@ -27,12 +36,9 @@
                     <td class="score-input">vs</td>
                     <td class="score-input"><input id="team_2_goals" name="team_2_goals"class="score-input" type="number"></td>
                     <td>{{ team[1] }}</td><input type="hidden" id="team_2" name="team_2" value="{{ team[1] }}">
-                    <td><input class="login-button" type="submit" value="Submit Score"></td>
+                    <td><input class="score-submit-button" id="score-input" type="submit" value="Submit Score"></td>
                 </form>
-                </tr>
-                
-
-                    {% endfor %}
+                </tr>   
                 {% endfor %}
             
           

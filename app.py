@@ -19,6 +19,7 @@ allresults=[]
 
 
 
+
 @app.route('/', methods =['GET'])
 def index():
      return render_template('index.html', allteams=allteams)
@@ -29,41 +30,25 @@ def players():
     return render_template('players.html')
 
 
-@app.route('/fixtures/', methods=['GET','POST'])
+@app.route('/fixtures/', methods=['GET'])
 def fixtures():
-    team_name_list = [team.team_name for team in allteams]
-    if len(team_name_list)%2 !=0:   
-        team_name_list.append('Bye')
-    
-    weeks =len(team_name_list)-1
-    half = len(team_name_list) // 2
-
-    global fixture 
-    fixture= []
-
-    for week in range(weeks):
-        week_fixtures = []
-
-        for i in range(half):
-            team1 = team_name_list[i]
-            team2 = team_name_list[len(team_name_list) - 1 - i]
-            week_fixtures.append((team1, team2))
-        
-        fixture.append(week_fixtures)
-        team_name_list.insert(1, team_name_list.pop())
-        # print(fixture)                         
-    
     return render_template('fixtures.html', fixture=fixture)
+
+   
 
 
 
 @app.route('/results/', methods=['GET','POST'])
 def results(): 
-    return render_template('results.html', fixture=fixture)
+  
+
+    return render_template('results.html', allresults=allresults,fixture_flat=fixture_flat)
 
 
 @app.route('/submit_results/', methods=['POST'])
 def submit_results(): 
+    # fixture_flat=[item for sublist in fixture for item in sublist]
+    
     if len(allteams) > 0:
         team_1 = request.form['team_1']
         team_2 = request.form['team_2']
@@ -72,14 +57,13 @@ def submit_results():
 
         match_result = Results_list(team_1, team_2, team_1_goals, team_2_goals)
         global allresults
-        
         allresults.append([match_result.team_1, match_result.team_2, int(match_result.team_1_goals), int(match_result.team_2_goals)])
-
-        print(allresults)
-
     
-
-    return render_template('results.html', fixture=fixture)
+        fixture_flat.pop(0)
+        print(fixture_flat)
+        print(allresults)
+       
+    return render_template('results.html',  allresults=allresults, fixture_flat=fixture_flat)
 
 
 
@@ -96,6 +80,8 @@ def register():
  
 # Get team data from form and add to list allteams
 
+# Generate fixtures 
+
 @app.route('/submit', methods=['POST'])
 def submit():
     team_no = allteams.__len__()+1
@@ -109,14 +95,44 @@ def submit():
    
     allteams.append(team_id)
 
+    print (len(allteams))
+
+    # generate fixtures
+  
+    team_name_list = [team.team_name for team in allteams]
+    if len(team_name_list)%2 !=0:   
+        team_name_list.append('Bye')
+    
+    weeks =len(team_name_list)-1
+    half = len(team_name_list) // 2
+
+    global fixture   
+    fixture= []
+
+    for week in range(weeks):
+        week_fixtures = []
+
+        for i in range(half):
+            team1 = team_name_list[i]
+            team2 = team_name_list[len(team_name_list) - 1 - i]
+            week_fixtures.append([team1, team2])
+        
+        fixture.append(week_fixtures)
+        team_name_list.insert(1, team_name_list.pop())
+        print(fixture) 
+
+    # flatten fixture list
+    global fixture_flat
+    fixture_flat=[item for sublist in fixture for item in sublist]  
+
   
     return render_template('register.html', team_id=team_id)
 
 def user():
-    users = {}
+    users = []
     for team in allteams: 
         users[team.team_id] = team.team_name
-    return users
+    print(users)
 
 
 
