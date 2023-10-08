@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from models import Teams, Results_list
+from models import Teams, Results_list,Table
 from itertools import combinations
-import random
+
 
 
 
@@ -17,30 +17,59 @@ fixture=[]
 allresults=[]
 
 
-
-
-
 @app.route('/', methods =['GET'])
 def index():
+     
      return render_template('index.html', allteams=allteams)
 
 
-@app.route('/players/')
-def players():
-    return render_template('players.html')
+@app.route('/table/',methods=['GET'])
+def table():
+
+    for game in allresults:
+        team_1_name, team_1_score, team_2_name, team_2_score = game
+        team_1= next(team for team in Table.all_stats if team.team_name == team_1_name)
+        team_2= next(team for team in Table.all_stats if team.team_name == team_2_name)
+
+        if team_1 and team_2:
+            team_1.played += 1
+            team_2.played += 1
+            team_1.goals_for += team_1_score 
+            team_2.goals_against += team_1_score
+            team_2.goals_for += team_2_score 
+            team_1.goals_against += team_2_score
+        
+        if team_1_score > team_2_score:
+            team_1.wins += 1
+            team_2.loses += 1
+            team_1.points += 3
+
+        elif team_1_score < team_2_score: 
+            team_1.loses += 1 
+            team_2.wins += 1 
+            team_2.points += 3
+
+        else: 
+            team_1.draws += 1 
+            team_2.draws += 1
+            team_1.points += 1 
+            team_2.points += 1
+
+        for team in Table.all_stats:
+            print(f"Team: {team.team_name}, Played: {team.played}, Points: {team.points}, Goals For: {team.goals_for}, Goals Against: {team.goals_against}, Goals Difference: {team.goals_difference}, Wins: {team.wins}, Draws: {team.draws}, Losses: {team.losses}")
+
+    return render_template('table.html')
 
 
 @app.route('/fixtures/', methods=['GET'])
 def fixtures():
+
     return render_template('fixtures.html', fixture=fixture)
 
    
 
-
-
 @app.route('/results/', methods=['GET','POST'])
 def results(): 
-  
 
     return render_template('results.html', allresults=allresults,fixture_flat=fixture_flat)
 
@@ -55,9 +84,9 @@ def submit_results():
         team_1_goals = request.form['team_1_goals']
         team_2_goals = request.form['team_2_goals']
 
-        match_result = Results_list(team_1, team_2, team_1_goals, team_2_goals)
+        match_result = Results_list(team_1, team_1_goals, team_2, team_2_goals)
         global allresults
-        allresults.append([match_result.team_1, match_result.team_2, int(match_result.team_1_goals), int(match_result.team_2_goals)])
+        allresults.append([match_result.team_1, int(match_result.team_1_goals), match_result.team_2, int(match_result.team_2_goals)])
     
         fixture_flat.pop(0)
         print(fixture_flat)
@@ -66,11 +95,9 @@ def submit_results():
     return render_template('results.html',  allresults=allresults, fixture_flat=fixture_flat)
 
 
-
 @app.route('/login/', methods=['POST'])
 def login():
     return render_template('login.html')
-
 
 
 @app.route('/register/')
@@ -79,8 +106,6 @@ def register():
 
  
 # Get team data from form and add to list allteams
-
-# Generate fixtures 
 
 @app.route('/submit', methods=['POST'])
 def submit():
@@ -98,7 +123,6 @@ def submit():
     print (len(allteams))
 
     # generate fixtures
-  
     team_name_list = [team.team_name for team in allteams]
     if len(team_name_list)%2 !=0:   
         team_name_list.append('Bye')
@@ -121,12 +145,12 @@ def submit():
         team_name_list.insert(1, team_name_list.pop())
         print(fixture) 
 
-    # flatten fixture list
+    # flatten fixture list for results page
     global fixture_flat
     fixture_flat=[item for sublist in fixture for item in sublist]  
 
-  
     return render_template('register.html', team_id=team_id)
+
 
 def user():
     users = []

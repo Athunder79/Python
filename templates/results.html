@@ -20,25 +20,40 @@
                 <tr>
                     <td></td>
                     <td>{{ result[0] }}</td>
-                    <td>{{ result[2] }}</td>
+                    <td>{{ result[1] }}</td>
                     <td>vs</td>
                     <td>{{ result[3] }}</td>
-                    <td>{{ result[1] }}</td>
+                    <td>{{ result[2] }}</td>
                 </tr>
                 {% endfor %}
             
-                {% for team in fixture_flat %}   
+                {% for team in fixture_flat %}
+                    {% if team[0] == "Bye" or team[1] == "Bye" %}
+
                 <tr>
                 <form class="register" action="/submit_results" method="post">
                     <td></td>        
                     <td>{{ team[0] }}</td><input type="hidden" id="team_1" name="team_1" value="{{ team[0] }}">
-                    <td class="score-input"><input name="team_1_goals" id="team_1_goals" class="score-input"  type="number"></td>
+                    <td class="score-input"><input type="hidden" name="team_1_goals" id="team_1_goals" class="score-input" value="x" type="number"></td>
                     <td class="score-input">vs</td>
-                    <td class="score-input"><input id="team_2_goals" name="team_2_goals"class="score-input" type="number"></td>
+                    <td class="score-input"><input type="hidden" id="team_2_goals" name="team_2_goals"class="score-input" type="number" value="x"></td>
                     <td>{{ team[1] }}</td><input type="hidden" id="team_2" name="team_2" value="{{ team[1] }}">
-                    <td><input class="score-submit-button" id="score-input" type="submit" value="Submit Score"></td>
+                    <td></td>
                 </form>
                 </tr>   
+                    {% else %}
+                    <tr>
+                        <form class="register" action="/submit_results" method="post">
+                            <td></td>        
+                            <td>{{ team[0] }}</td><input type="hidden" id="team_1" name="team_1" value="{{ team[0] }}">
+                            <td class="score-input"><input name="team_1_goals" id="team_1_goals" class="score-input"  type="number"></td>
+                            <td class="score-input">vs</td>
+                            <td class="score-input"><input id="team_2_goals" name="team_2_goals"class="score-input" type="number"></td>
+                            <td>{{ team[1] }}</td><input type="hidden" id="team_2" name="team_2" value="{{ team[1] }}">
+                            <td><input class="score-submit-button" id="score-input" type="submit" value="Submit Score"></td>
+                        </form>
+                        </tr>   
+                    {% endif %}
                 {% endfor %}
             
           

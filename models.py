@@ -13,15 +13,18 @@ class Fixture_list:
         self.team_2 = team_2
     
 class Results_list:
-    def __init__(self, team_1, team_2, team_1_goals=0, team_2_goals=0):
+    def __init__(self, team_1, team_1_goals, team_2, team_2_goals):
         self.team_1 = team_1
-        self.team_2 = team_2
         self.team_1_goals = team_1_goals
+        self.team_2 = team_2
         self.team_2_goals = team_2_goals
 
 class Table:
-    def __init__(self, team_name, points, goals_for, goals_against, goals_difference, wins, losses, draws):
+    all_stats=[]
+    
+    def __init__(self, team_name, played=0, points=0, goals_for=0, goals_against=0, goals_difference=0, wins=0, losses=0, draws=0):
         self.team_name = team_name
+        self.played = played
         self.points = points
         self.goals_for = goals_for
         self.goals_against = goals_against
@@ -29,6 +32,10 @@ class Table:
         self.wins = wins
         self.losses = losses
         self.draws = draws
+        Table.all_stats.append(self)
+    
+   
+
        
 
 class Players:
