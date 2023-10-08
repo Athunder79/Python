@@ -15,50 +15,73 @@ def inject_enumerate():
 allteams=[]
 fixture=[]
 allresults=[]
+table_results=[]
 
 
 @app.route('/', methods =['GET'])
 def index():
+     print(allteams)    
      
      return render_template('index.html', allteams=allteams)
 
 
 @app.route('/table/',methods=['GET'])
 def table():
+    def update_table(results):
+        for game in results:
+            team_1_name, team_1_score, team_2_name, team_2_score = game
 
-    for game in allresults:
-        team_1_name, team_1_score, team_2_name, team_2_score = game
-        team_1= next(team for team in Table.all_stats if team.team_name == team_1_name)
-        team_2= next(team for team in Table.all_stats if team.team_name == team_2_name)
+            team_1= None
+            for team in Table.all_stats:
+                if team.team_name == team_1_name:
+                    team_1 = team
+                    break
+                    
+            team_2= None
+            for team in Table.all_stats:
+                if team.team_name == team_2_name:
+                    team_2 = team
+                    break
 
-        if team_1 and team_2:
-            team_1.played += 1
-            team_2.played += 1
-            team_1.goals_for += team_1_score 
-            team_2.goals_against += team_1_score
-            team_2.goals_for += team_2_score 
-            team_1.goals_against += team_2_score
+            if team_1 and team_2:   
+                team_1.played += 1
+                team_2.played += 1
+                team_1.goals_for += team_1_score 
+                team_2.goals_against += team_1_score
+                team_2.goals_for += team_2_score 
+                team_1.goals_against += team_2_score
+            
+                if team_1_score > team_2_score:
+                    team_1.wins += 1
+                    team_2.losses += 1
+                    team_1.points += 3
+
+                elif team_1_score < team_2_score: 
+                    team_1.losses += 1 
+                    team_2.wins += 1 
+                    team_2.points += 3
+
+                else: 
+                    team_1.draws += 1 
+                    team_2.draws += 1
+                    team_1.points += 1 
+                    team_2.points += 1
+                
+    # prevent duplicate instances of Table
+    for team in allteams:
+        if not any(team.team_name == existing_team.team_name for existing_team in Table.all_stats):
+            Table(team.team_name)
+        else:
+            break
         
-        if team_1_score > team_2_score:
-            team_1.wins += 1
-            team_2.loses += 1
-            team_1.points += 3
+    print(table_results)
+    update_table(table_results)
+    table_results.clear()
 
-        elif team_1_score < team_2_score: 
-            team_1.loses += 1 
-            team_2.wins += 1 
-            team_2.points += 3
-
-        else: 
-            team_1.draws += 1 
-            team_2.draws += 1
-            team_1.points += 1 
-            team_2.points += 1
-
-        for team in Table.all_stats:
-            print(f"Team: {team.team_name}, Played: {team.played}, Points: {team.points}, Goals For: {team.goals_for}, Goals Against: {team.goals_against}, Goals Difference: {team.goals_difference}, Wins: {team.wins}, Draws: {team.draws}, Losses: {team.losses}")
-
-    return render_template('table.html')
+    for team in Table.all_stats:
+        print(f"Team: {team.team_name}, Played: {team.played}, Points: {team.points}, Goals For: {team.goals_for}, Goals Against: {team.goals_against}, Goals Difference: {team.goals_difference}, Wins: {team.wins}, Draws: {team.draws}, Losses: {team.losses}")
+    
+    return render_template('table.html', all_stats=Table.all_stats)
 
 
 @app.route('/fixtures/', methods=['GET'])
@@ -76,8 +99,8 @@ def results():
 
 @app.route('/submit_results/', methods=['POST'])
 def submit_results(): 
-    # fixture_flat=[item for sublist in fixture for item in sublist]
     
+  
     if len(allteams) > 0:
         team_1 = request.form['team_1']
         team_2 = request.form['team_2']
@@ -85,12 +108,20 @@ def submit_results():
         team_2_goals = request.form['team_2_goals']
 
         match_result = Results_list(team_1, team_1_goals, team_2, team_2_goals)
+        
         global allresults
         allresults.append([match_result.team_1, int(match_result.team_1_goals), match_result.team_2, int(match_result.team_2_goals)])
-    
+        
+
+        global table_results 
+        table_results.append([match_result.team_1, int(match_result.team_1_goals), match_result.team_2, int(match_result.team_2_goals)])
+        
         fixture_flat.pop(0)
         print(fixture_flat)
         print(allresults)
+    
+    
+
        
     return render_template('results.html',  allresults=allresults, fixture_flat=fixture_flat)
 
@@ -147,7 +178,9 @@ def submit():
 
     # flatten fixture list for results page
     global fixture_flat
-    fixture_flat=[item for sublist in fixture for item in sublist]  
+    fixture_flat=[item for sublist in fixture for item in sublist] 
+
+  
 
     return render_template('register.html', team_id=team_id)
 
