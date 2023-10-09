@@ -1,8 +1,7 @@
 class Teams:
-    def __init__(self, team_no, team_id, password, team_name, team_color, players=None):
+    def __init__(self, team_no, team_id, team_name, team_color, players=None):
         self.team_no = team_no
         self.team_id = team_id
-        self.password = password
         self.team_name = team_name
         self.team_color = team_color
         self.players = players or []
@@ -28,7 +27,7 @@ class Table:
         self.points = points
         self.goals_for = goals_for
         self.goals_against = goals_against
-        self.goals_difference = goals_difference
+        self.goal_difference = goals_difference
         self.wins = wins
         self.losses = losses
         self.draws = draws

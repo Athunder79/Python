@@ -50,6 +50,8 @@ def table():
                 team_2.goals_against += team_1_score
                 team_2.goals_for += team_2_score 
                 team_1.goals_against += team_2_score
+                team_1.goal_difference = team_1.goals_for - team_1.goals_against 
+                team_2.goal_difference = team_2.goals_for - team_2.goals_against
             
                 if team_1_score > team_2_score:
                     team_1.wins += 1
@@ -76,12 +78,14 @@ def table():
         
     print(table_results)
     update_table(table_results)
+
+    sorted_table = sorted(Table.all_stats, key=lambda x: (x.points, x.goal_difference), reverse=True)
+
+
     table_results.clear()
 
-    for team in Table.all_stats:
-        print(f"Team: {team.team_name}, Played: {team.played}, Points: {team.points}, Goals For: {team.goals_for}, Goals Against: {team.goals_against}, Goals Difference: {team.goals_difference}, Wins: {team.wins}, Draws: {team.draws}, Losses: {team.losses}")
     
-    return render_template('table.html', all_stats=Table.all_stats)
+    return render_template('table.html', sorted_table=sorted_table)
 
 
 @app.route('/fixtures/', methods=['GET'])
@@ -142,12 +146,11 @@ def register():
 def submit():
     team_no = allteams.__len__()+1
     team_id = request.form['team_id']
-    password = request.form['password']
     team_name = request.form['team_name']
     team_color = request.form['team_color']
     players = request.form.getlist('player')
 
-    team_id = Teams(team_no, team_id, password, team_name, team_color, players)
+    team_id = Teams(team_no, team_id, team_name, team_color, players)
    
     allteams.append(team_id)
 
