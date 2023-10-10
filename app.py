@@ -16,11 +16,12 @@ fixture=[]
 all_results=[]
 table_results=[]
 users=[]
+fixture_flat=[]
 
 
 @app.route('/', methods =['GET'])
 def index():
-     print(allteams)    
+        
      
      return render_template('index.html', allteams=allteams)
 
@@ -138,7 +139,8 @@ def login():
             session['username'] = username
             return redirect(url_for('index'))
         else:
-            return 'Invalid username. <a href="/login">Try Again</a>'
+            error_message_1 = 'Username not found, please try again or register your team'
+            return render_template('login.html', error_message_1=error_message_1)
     return render_template('login.html')
 
 
@@ -164,7 +166,8 @@ def submit():
     players = request.form.getlist('player')
 
     if team_id in users:
-        raise ValueError('A very specific bad thing happened.')
+        error_message = 'It looks like you have already registered a team with this username. Please login or register with a different username.'
+        return render_template('login.html', error_message=error_message)
 
     team_id = Teams(team_no, team_id, team_name, team_color, players)
    
@@ -201,7 +204,7 @@ def submit():
 
   
 
-    return render_template('register.html', team_id=team_id)
+    return render_template('login.html')
 
 
 

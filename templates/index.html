@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+<main>
 <div class="container">
         <div class="row">
-            <h4>This is a title</h4>
-            <p>This is a paragraph</p>
+            
         </div>
 
-    {% if 'team_id' in session %}
+    {% if 'team_id' = in session(user) %}
         <h2>Your Team:</h2>
     <table>
         <tr>
@@ -56,4 +57,5 @@
 </div>
         </div>           
     </div>
+</main>
 {% endblock %}

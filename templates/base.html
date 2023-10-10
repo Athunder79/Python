@@ -42,6 +42,7 @@
         </nav>
     </header>
     <main>
+    <div>
        
         {% if 'username' in session %}
             <h2>Welcome: {{ session['username'] }}</h2>
@@ -49,6 +50,7 @@
 
         {% block content %}
         {% endblock %}
+    </div>
     </main>
     <footer>
         <div class="footer-logo">
@@ -65,7 +67,6 @@
             <p>Copyright &copy; 2023</p>
             <p>All rights reserved</p> 
         </div>
-        
     </footer>
 </body>
 </html>

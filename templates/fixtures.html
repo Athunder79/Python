@@ -7,11 +7,11 @@
         <caption><h2>Fixtures</h2></caption>
         <thead>
             <tr>
-                <th>Week</th>
+                <th>Round</th>
                 <th></th>
                 <th>Team 1</th>
                 <th></th>
-                <th></th>
+                
                 <th>Team 2</th>
             </tr>
         </thead>
@@ -20,11 +20,12 @@
                 {% for fixture in week_fixtures %}
                 <tr>
                     <td>{{ week }}</td>        
-                    <td class="swatch"></td>     
+                    <td><span class="swatch"></span></td>     
                     <td>{{ fixture[0] }}</td>
                     <td>vs</td>
-                    <td class="swatch"></td>
                     <td>{{ fixture[1] }}</td>
+                    <td><span class="swatch"></span></td>
+                    
                 </tr>
                 {% endfor %}
             {% endfor %}
