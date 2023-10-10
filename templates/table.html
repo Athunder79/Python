@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-<main>f
+<main>
+    <h1 class="center">League Table</h1>
     
+    
+    <div class="center">
     <table>
         <tr>
-        <th>Team Name</th>
+        <th>Position</th>
+        <th>Team</th>
         <th>Played</th>
         <th>Won</th>
         <th>lost</th>
@@ -17,18 +21,20 @@
         </tr>
         {%for team in sorted_table%}
         <tr>
-        <td>{{team.team_name}}</td>
-        <td>{{team.played}}</td>
-        <td>{{team.wins}}</td>
-        <td>{{team.losses}}</td>
-        <td>{{team.draws}}</td>
-        <td>{{team.goals_for}}</td>
-        <td>{{team.goals_against}}</td>
-        <td>{{team.goal_difference}}</td>
-        <td>{{team.points}}</td>
+        <td>{{ loop.index }}</td>
+        <td>{{ team.team_name }}</td>
+        <td>{{ team.played }}</td>
+        <td>{{ team.wins }}</td>
+        <td>{{ team.losses }}</td>
+        <td>{{ team.draws }}</td>
+        <td>{{ team.goals_for }}</td>
+        <td>{{ team.goals_against }}</td>
+        <td>{{ team.goal_difference }}</td>
+        <td>{{ team.points }}</td>
         </tr>
         {%endfor%}
     </table>
+    </div>
 </main>
 
 

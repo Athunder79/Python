@@ -2,20 +2,20 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from models import Teams, Results_list,Table
 from itertools import combinations
 
-
-
-
 app = Flask(__name__)
+app.secret_key = 'fiveaside'
 
 
 @app.context_processor
 def inject_enumerate():
     return dict(enumerate=enumerate)
 
+
 allteams=[]
 fixture=[]
-allresults=[]
+all_results=[]
 table_results=[]
+users=[]
 
 
 @app.route('/', methods =['GET'])
@@ -98,7 +98,7 @@ def fixtures():
 @app.route('/results/', methods=['GET','POST'])
 def results(): 
 
-    return render_template('results.html', allresults=allresults,fixture_flat=fixture_flat)
+    return render_template('results.html', all_results=all_results, fixture_flat=fixture_flat)
 
 
 @app.route('/submit_results/', methods=['POST'])
@@ -113,8 +113,8 @@ def submit_results():
 
         match_result = Results_list(team_1, team_1_goals, team_2, team_2_goals)
         
-        global allresults
-        allresults.append([match_result.team_1, int(match_result.team_1_goals), match_result.team_2, int(match_result.team_2_goals)])
+        global all_results
+        all_results.append([match_result.team_1, int(match_result.team_1_goals), match_result.team_2, int(match_result.team_2_goals)])
         
 
         global table_results 
@@ -122,17 +122,30 @@ def submit_results():
         
         fixture_flat.pop(0)
         print(fixture_flat)
-        print(allresults)
+        print(all_results)
     
     
 
        
-    return render_template('results.html',  allresults=allresults, fixture_flat=fixture_flat)
+    return render_template('results.html',  all_results=all_results, fixture_flat=fixture_flat)
 
 
-@app.route('/login/', methods=['POST'])
+@app.route('/login/', methods=['GET','POST'])
 def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        if username in users:
+            session['username'] = username
+            return redirect(url_for('index'))
+        else:
+            return 'Invalid username. <a href="/login">Try Again</a>'
     return render_template('login.html')
+
+
+@app.route('/logout/')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('index'))
 
 
 @app.route('/register/')
@@ -150,11 +163,14 @@ def submit():
     team_color = request.form['team_color']
     players = request.form.getlist('player')
 
+    if team_id in users:
+        raise ValueError('A very specific bad thing happened.')
+
     team_id = Teams(team_no, team_id, team_name, team_color, players)
    
     allteams.append(team_id)
 
-    print (len(allteams))
+    users.append(team_id.team_id)
 
     # generate fixtures
     team_name_list = [team.team_name for team in allteams]
@@ -188,11 +204,6 @@ def submit():
     return render_template('register.html', team_id=team_id)
 
 
-def user():
-    users = []
-    for team in allteams: 
-        users[team.team_id] = team.team_name
-    print(users)
 
 
 
