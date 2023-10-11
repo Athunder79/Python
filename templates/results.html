@@ -35,7 +35,7 @@
 
                 <tr>
                 <form class="register" action="/submit_results" method="post">
-                    <td></td>        
+                    <td>{{ loop.index0 +1 }}</td>        
                     <td>{{ team[0] }}</td><input type="hidden" id="team_1" name="team_1" value="{{ team[0] }}">
                     <td class="score-input"><input type="hidden" name="team_1_goals" id="team_1_goals" class="score-input" value="x" type="number"></td>
                     <td class="score-input">vs</td>
@@ -47,7 +47,8 @@
                     {% else %}
                     <tr>
                         <form class="register" action="/submit_results" method="post">
-                            <td></td>        
+                           
+                            <td>{{ loop.index0 +1 }}</td>        
                             <td>{{ team[0] }}</td><input type="hidden" id="team_1" name="team_1" value="{{ team[0] }}">
                             <td class="score-input"><input name="team_1_goals" id="team_1_goals" class="score-input"  type="number"></td>
                             <td class="score-input">vs</td>

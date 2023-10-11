@@ -121,7 +121,9 @@ def submit_results():
         global table_results 
         table_results.append([match_result.team_1, int(match_result.team_1_goals), match_result.team_2, int(match_result.team_2_goals)])
         
-        fixture_flat.pop(0)
+        submitted_score = [team_1, team_2]
+        fixture_flat.remove(submitted_score)
+
         print(fixture_flat)
         print(all_results)
     

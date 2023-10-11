@@ -8,34 +8,6 @@
             
         </div>
 
-    {% if 'team_id' = in session(user) %}
-        <h2>Your Team:</h2>
-    <table>
-        <tr>
-        <td>Username:</td>
-        <td>{{ team_id.team_id }}</td>
-        </tr>
-        <tr>
-        <td>Team Name:</td>
-        <td>{{ team_id.team_name }}</td>
-        </tr>
-        <tr>
-        <td>Team Colours:</td>
-        <td><span class="team-color swatch" ></span></td>
-        </tr>
-        <tr>
-        <td>Password:</td>
-        <td>{{ team_id.password }}</td>
-        </tr>
-    </table>
-    <table>
-        <tr>
-        <td>Squad:</td>
-        <td>{{ team_id.players }}</td>
-        </tr>
-    </table>
-    
-    {% endif %}
     <div class="center">
             <table>
                 <caption><h2>Registered Teams</h2></caption>
