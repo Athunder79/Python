@@ -77,7 +77,7 @@ def table():
         else:
             break
         
-    print(table_results)
+    print(all_results)
     update_table(table_results)
 
     sorted_table = sorted(Table.all_stats, key=lambda x: (x.points, x.goal_difference), reverse=True)
@@ -105,12 +105,28 @@ def results():
 @app.route('/submit_results/', methods=['POST'])
 def submit_results(): 
     
-  
+
+    if 'username' not in session:
+        submit_score_login_error = "You must be logged in to submit results"
+        return render_template('login.html', submit_score_login_error=submit_score_login_error)
+    
+    username = session['username']
+    
+
     if len(allteams) > 0:
         team_1 = request.form['team_1']
         team_2 = request.form['team_2']
         team_1_goals = request.form['team_1_goals']
         team_2_goals = request.form['team_2_goals']
+
+        Match_team_names=next((team for team in allteams if team.team_id == username ), None)
+
+        if team_1 != Match_team_names.team_name and team_2 != Match_team_names.team_name:
+            submit_results_error = "You cannot enter results for a game you were not involved in"
+            return render_template('results.html', submit_results_error=submit_results_error)
+
+
+        
 
         match_result = Results_list(team_1, team_1_goals, team_2, team_2_goals)
         
@@ -123,12 +139,6 @@ def submit_results():
         
         submitted_score = [team_1, team_2]
         fixture_flat.remove(submitted_score)
-
-        print(fixture_flat)
-        print(all_results)
-    
-    
-
        
     return render_template('results.html',  all_results=all_results, fixture_flat=fixture_flat)
 
@@ -141,8 +151,8 @@ def login():
             session['username'] = username
             return redirect(url_for('index'))
         else:
-            error_message_1 = 'Username not found, please try again or register your team'
-            return render_template('login.html', error_message_1=error_message_1)
+            login_error = 'Username not found, please try again or register your team'
+            return render_template('login.html', login_error=login_error)
     return render_template('login.html')
 
 
@@ -168,8 +178,8 @@ def submit():
     players = request.form.getlist('player')
 
     if team_id in users:
-        error_message = 'It looks like you have already registered a team with this username. Please login or register with a different username.'
-        return render_template('login.html', error_message=error_message)
+        register_error = 'It looks like you have already registered a team with this username. Please login or register with a different username.'
+        return render_template('login.html', register_error=register_error)
 
     team_id = Teams(team_no, team_id, team_name, team_color, players)
    

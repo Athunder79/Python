@@ -3,11 +3,13 @@
 {% block content %}
 <main>
     <div class="center">
+        {% if submit_results_error %}
+        <div class="error center">{{ submit_results_error }}</div>
+{% endif %}
     <table>
         <caption><h2>Results</h2></caption>
         <thead>
             <tr>
-                <th>Week</th>
                 <th>Team 1</th>
                 <th>score</th>
                 <th></th>
@@ -20,7 +22,6 @@
 
                 {% for result in all_results %}
                 <tr>
-                    <td></td>
                     <td>{{ result[0] }}</td>
                     <td>{{ result[1] }}</td>
                     <td>vs</td>
@@ -34,8 +35,7 @@
                     {% if team[0] == "Bye" or team[1] == "Bye" %}
 
                 <tr>
-                <form class="register" action="/submit_results" method="post">
-                    <td>{{ loop.index0 +1 }}</td>        
+                <form class="register" action="/submit_results" method="post">     
                     <td>{{ team[0] }}</td><input type="hidden" id="team_1" name="team_1" value="{{ team[0] }}">
                     <td class="score-input"><input type="hidden" name="team_1_goals" id="team_1_goals" class="score-input" value="x" type="number"></td>
                     <td class="score-input">vs</td>
@@ -46,9 +46,7 @@
                 </tr>   
                     {% else %}
                     <tr>
-                        <form class="register" action="/submit_results" method="post">
-                           
-                            <td>{{ loop.index0 +1 }}</td>        
+                        <form class="register" action="/submit_results" method="post">    
                             <td>{{ team[0] }}</td><input type="hidden" id="team_1" name="team_1" value="{{ team[0] }}">
                             <td class="score-input"><input name="team_1_goals" id="team_1_goals" class="score-input"  type="number"></td>
                             <td class="score-input">vs</td>

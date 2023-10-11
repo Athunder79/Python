@@ -5,11 +5,14 @@
 
 
 <h1 class="center">Login</h1>
-{% if error_message %}
-        <div class="error center">{{ error_message }}</div>
+{% if register_error %}
+        <div class="error center">{{ register_error }}</div>
 {% endif %}
-{% if error_message_1 %}
-        <div><span class="error center">{{ error_message_1 }}<a href="{{ url_for('register') }}">Here</a></span></div>
+{% if login_error %}
+        <div><span class="error center">{{ login_error }}<a href="{{ url_for('register') }}">Here</a></span></div>
+{% endif %}
+{% if submit_score_login_error %}
+        <div class="error center">{{ submit_score_login_error }}</div>
 {% endif %}
 <form class="register" method="post" action="/login/">
     <label for="username">Enter Your Username:</label>
