@@ -17,13 +17,18 @@ all_results=[]
 table_results=[]
 users=[]
 fixture_flat=[]
+my_team=[]
 
 
 @app.route('/', methods =['GET'])
 def index():
-        
-     
-     return render_template('index.html', allteams=allteams)
+    if 'username' in session:
+        username = session['username']
+        my_team=next((team for team in allteams if team.team_id == username ), None)
+       
+        return render_template('index.html', allteams=allteams, my_team=my_team)
+    
+    return render_template('index.html', allteams=allteams)
 
 
 @app.route('/table/',methods=['GET'])
@@ -77,15 +82,12 @@ def table():
         else:
             break
         
-    print(all_results)
     update_table(table_results)
 
     sorted_table = sorted(Table.all_stats, key=lambda x: (x.points, x.goal_difference), reverse=True)
 
-
     table_results.clear()
 
-    
     return render_template('table.html', sorted_table=sorted_table)
 
 
@@ -94,7 +96,6 @@ def fixtures():
 
     return render_template('fixtures.html', fixture=fixture)
 
-   
 
 @app.route('/results/', methods=['GET','POST'])
 def results(): 
@@ -105,14 +106,12 @@ def results():
 @app.route('/submit_results/', methods=['POST'])
 def submit_results(): 
     
-
     if 'username' not in session:
         submit_score_login_error = "You must be logged in to submit results"
         return render_template('login.html', submit_score_login_error=submit_score_login_error)
     
     username = session['username']
     
-
     if len(allteams) > 0:
         team_1 = request.form['team_1']
         team_2 = request.form['team_2']
@@ -125,15 +124,11 @@ def submit_results():
             submit_results_error = "You cannot enter results for a game you were not involved in"
             return render_template('results.html', submit_results_error=submit_results_error)
 
-
-        
-
         match_result = Results_list(team_1, team_1_goals, team_2, team_2_goals)
         
         global all_results
         all_results.append([match_result.team_1, int(match_result.team_1_goals), match_result.team_2, int(match_result.team_2_goals)])
         
-
         global table_results 
         table_results.append([match_result.team_1, int(match_result.team_1_goals), match_result.team_2, int(match_result.team_2_goals)])
         
@@ -147,12 +142,15 @@ def submit_results():
 def login():
     if request.method == 'POST':
         username = request.form['username']
+
         if username in users:
             session['username'] = username
             return redirect(url_for('index'))
+        
         else:
             login_error = 'Username not found, please try again or register your team'
             return render_template('login.html', login_error=login_error)
+        
     return render_template('login.html')
 
 
@@ -214,13 +212,7 @@ def submit():
     global fixture_flat
     fixture_flat=[item for sublist in fixture for item in sublist] 
 
-  
-
     return render_template('login.html')
-
-
-
-
 
 if __name__ == '__main__':
     app.run(debug=True, port=8080)
