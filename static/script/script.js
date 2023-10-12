@@ -1,20 +1,45 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
+
     let table = document.getElementById('league-table');
     let headers = table.querySelectorAll('th');
-    
+
+    check = 1;
+
     headers.forEach(header => {
         header.addEventListener('click', () => {
+
             let column = header.cellIndex;
             let rows = Array.from(table.querySelectorAll('tbody tr'));
-            
-            rows.sort((a, b) => {
-                let aValue = a.cells[column].textContent;
-                let bValue = b.cells[column].textContent;
-                
-                return isNaN(aValue) ? aValue.localeCompare(bValue) : aValue - bValue;
-            });
-            
+            let head = rows.shift();
+            if (check == 1) {
+                rows.sort((b, a) => {
+                    check = 0;
+                    let aValue = a.cells[column].textContent;
+                    let bValue = b.cells[column].textContent;
+
+                    if (isNaN(aValue)) {
+                        return aValue.localeCompare(bValue);
+                    } else {
+                        return aValue - bValue;
+                    }
+                });
+            }
+            else {
+                rows.sort((a, b) => {
+                    check = 1;
+                    let aValue = a.cells[column].textContent;
+                    let bValue = b.cells[column].textContent;
+
+                    if (isNaN(aValue)) {
+                        return aValue.localeCompare(bValue);
+                    } else {
+                        return aValue - bValue;
+                    }
+                })
+            }
+
             table.querySelector('tbody').append(...rows);
+
         });
     });
 });
