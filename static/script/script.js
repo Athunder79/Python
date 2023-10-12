@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let headers = table.querySelectorAll('th');
 
     check = 1;
+    
 
     headers.forEach(header => {
         header.addEventListener('click', () => {
@@ -42,4 +43,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         });
     });
+
+    let mobileMenu = document.querySelector('.mobile-menu');
+    let menu = document.querySelector('.menu');
+
+    mobileMenu.addEventListener('click', function() {
+    menu.classList.toggle('show');
+  });
+
 });

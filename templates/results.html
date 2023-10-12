@@ -37,9 +37,9 @@
                 <tr>
                 <form class="register" action="/submit_results" method="post">     
                     <td>{{ team[0] }}</td><input type="hidden" id="team_1" name="team_1" value="{{ team[0] }}">
-                    <td class="score-input"><input type="hidden" name="team_1_goals" id="team_1_goals" class="score-input" value="x" type="number"></td>
+                    <td class="score-input"><input type="hidden" name="team_1_goals" id="team_1_goals" class="score-input" value="0" type="number" min="0"></td>
                     <td class="score-input">vs</td>
-                    <td class="score-input"><input type="hidden" id="team_2_goals" name="team_2_goals"class="score-input" type="number" value="x"></td>
+                    <td class="score-input"><input type="hidden" id="team_2_goals" name="team_2_goals"class="score-input" type="number" min="0" value="0"></td>
                     <td>{{ team[1] }}</td><input type="hidden" id="team_2" name="team_2" value="{{ team[1] }}">
                     <td></td>
                 </form>

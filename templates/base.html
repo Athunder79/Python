@@ -18,45 +18,37 @@
     </style>
 </head>
 <body>
-    <header class="sticky">
-        <div class="header-logo">
-            <h1>5 Aside Leagues</h1>
-            </div>
-        <div class="header-menu">
-            <p><a href="#">MENU</a></p>
-            <p><i class="arrow_down"></i></p>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('index') }}">Home</a></li>
-                <li><a href="{{ url_for('fixtures') }}">Fixtures</a></li>
-                <li><a href="{{ url_for('results') }}">Results</a></li>
-                <li><a href="{{ url_for('table') }}">Table</a></li>
-                {% if 'username' in session %}
-                <li><a href="{{ url_for('logout') }}">Logout</a></li>
-                {% else %}
-                <li><a href="{{ url_for('login') }}">Login</a></li>
-                <li><a href="{{ url_for('register') }}">Register Team</a></li>
-                {% endif %}
-            </ul>
-        </nav>
-    </header>
-    <main>
-    <div>
-       
+    <div class="header">
+        <h1>5 Aside Leagues</h1>
+        <div id ="mobile-menu" class="mobile-menu">&#9776;</div>
+        <ul class="menu">
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('fixtures') }}">Fixtures</a></li>
+            <li><a href="{{ url_for('results') }}">Results</a></li>
+            <li><a href="{{ url_for('table') }}">Table</a></li>
+            {% if 'username' in session %}
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+            <li><a href="{{ url_for('register') }}">Register Team</a></li>
+            <li></li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="username">
+
         {% if 'username' in session %}
-            <h2>Welcome: {{ session['username'] }}</h2>
+        <h2>Welcome: {{ session['username'] }}</h2>
         {% endif %}
 
         {% block content %}
         {% endblock %}
     </div>
-    </main>
     <footer>
         <div class="footer-logo">
-            <h1>5 Aside</h1>  
+            <h1>5 Aside</h1>
         </div>
-       
+
         <div class="footer-social">
             <p>Follow us</p>
             <p>Facebook</p>
@@ -65,8 +57,9 @@
         </div>
         <div class="footer-copyright">
             <p>Copyright &copy; 2023</p>
-            <p>All rights reserved</p> 
+            <p>All rights reserved</p>
         </div>
     </footer>
 </body>
+
 </html>
