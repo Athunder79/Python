@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+addEventListener('load', function () {
 
     let table = document.getElementById('league-table');
     let headers = table.querySelectorAll('th');

@@ -20,7 +20,7 @@
 <body>
     <div class="header">
         <h1>5 Aside Leagues</h1>
-        <div id ="mobile-menu" class="mobile-menu">&#9776;</div>
+        <div class="mobile-menu">&#9776;</div>
         <ul class="menu">
             <li><a href="{{ url_for('index') }}">Home</a></li>
             <li><a href="{{ url_for('fixtures') }}">Fixtures</a></li>
@@ -28,6 +28,7 @@
             <li><a href="{{ url_for('table') }}">Table</a></li>
             {% if 'username' in session %}
             <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            <li></li>
             {% else %}
             <li><a href="{{ url_for('login') }}">Login</a></li>
             <li><a href="{{ url_for('register') }}">Register Team</a></li>
