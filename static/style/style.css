@@ -58,7 +58,6 @@ body {
 
 
 table {
-
     box-shadow: 0 4px 8px #565454;
     font-size: 16px;
     width: 80%;
@@ -69,7 +68,6 @@ table {
     padding-right: 0px;
     padding-top: 12px;
     border-spacing: 0px;
-
 }
 
 .menu-line {
@@ -95,6 +93,11 @@ table {
     box-shadow: 0 10px 10px #1415141a
 }
 
+.swatch {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+}
 
 @media screen and (max-width: 800px) {
 
@@ -165,10 +168,12 @@ table {
         width: 90%;
     }
 
+    .swatch {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+    }
 }
-
-
-
 
 footer {
     display: flex;
@@ -177,8 +182,6 @@ footer {
     background-color: #23385A;
     color: white;
     padding: 10px 20px;
-
-
 }
 
 .left {
@@ -221,12 +224,10 @@ footer {
     /* font-weight: bolder; */
 }
 
-
 .header-logo {
     display: flex;
     font-size: 15px;
     font-weight: bold;
-
 }
 
 .header-menu a {
@@ -235,12 +236,9 @@ footer {
     text-decoration: none;
 }
 
-
 main {
     min-height: 80vh;
     padding-top: 20px;
-
-
 }
 
 .center {
@@ -248,7 +246,6 @@ main {
     flex-wrap: wrap;
     justify-content: space-around;
     margin-bottom: 40px;
-
 }
 
 .center-text {
@@ -259,8 +256,6 @@ main {
     width: 50%
 }
 
-
-
 .register-team {
     display: flex;
     flex-direction: column;
@@ -270,21 +265,10 @@ main {
     box-shadow: #565454;
 }
 
-
-.swatch {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-
-
-}
-
 .colour-cell {
     padding-top: 3px;
     padding-bottom: 0px
 }
-
-
 
 th {
     background-color: #23385A;
@@ -306,7 +290,6 @@ td {
     padding: .5em;
 }
 
-
 .login-button {
     width: 100%;
     padding: 10px;
@@ -319,7 +302,6 @@ td {
 }
 
 .home-page-button {
-
     margin-bottom: 8px;
     width: 50%;
     padding: 10px;
@@ -342,7 +324,6 @@ td {
     cursor: pointer;
 }
 
-
 .text-input {
     width: 90%;
     padding: 10px;
@@ -359,8 +340,7 @@ td {
 .error {
     color: red;
     font-size: 13px;
-  text-align: center;
-    
+  text-align: center;  
 }
 
 .pointer {
