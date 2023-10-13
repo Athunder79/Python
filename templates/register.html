@@ -2,10 +2,16 @@
 
 {% block content %}
 <main>
+   
     <div class="register-team">
-    <h1>Register Your Team</h1>
+    <h1 class="white">Register Your Team</h1>
 
         <form class="register" action="/submit" method="post">
+
+            {% if register_error_team_name %}
+            <p class="error"><strong>Error:</strong>{{ register_error_team_name }}</p>
+            {% endif %}
+
             
             <label for="team_id">Username:</label>
             <input class="text-input" type="text" id="team_id" name="team_id" required><br><br>

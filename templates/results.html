@@ -7,7 +7,7 @@
         <div class="error center">{{ submit_results_error }}</div>
 {% endif %}
     <table>
-        <caption><h2>Results</h2></caption>
+        <caption><h2 class="white">Results</h2></caption>
         <thead>
             <tr>
                 <th>Team 1</th>
@@ -52,7 +52,7 @@
                             <td class="score-input">vs</td>
                             <td class="score-input"><input id="team_2_goals" name="team_2_goals"class="score-input" type="number"></td>
                             <td>{{ team[1] }}</td><input type="hidden" id="team_2" name="team_2" value="{{ team[1] }}">
-                            <td><input class="score-submit-button" id="score-input" type="submit" value="Submit Score"></td>
+                            <td><input class="score-submit-button" id="score-input" type="submit" value="Submit"></td>
                         </form>
                         </tr>   
                     {% endif %}

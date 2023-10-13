@@ -22,6 +22,8 @@
         <h1>5 Aside Leagues</h1>
         <div class="mobile-menu">&#9776;</div>
         <ul class="menu">
+            <li class="menu-line">____________________________</li>
+            </li>
             <li><a href="{{ url_for('index') }}">Home</a></li>
             <li><a href="{{ url_for('fixtures') }}">Fixtures</a></li>
             <li><a href="{{ url_for('results') }}">Results</a></li>
@@ -41,10 +43,10 @@
         {% if 'username' in session %}
         <h2>Welcome: {{ session['username'] }}</h2>
         {% endif %}
-
+    </div>
         {% block content %}
         {% endblock %}
-    </div>
+    
     <footer>
         <div class="footer-logo">
             <h1>5 Aside</h1>

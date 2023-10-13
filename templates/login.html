@@ -4,8 +4,11 @@
 <main>
 
 
-<h1 class="center">Login</h1>
-{% if register_error %}
+<h1 class="center white">Login</h1>
+
+<form class="register" method="post" action="/login/">
+
+        {% if register_error %}
         <div class="error center">{{ register_error }}</div>
 {% endif %}
 {% if login_error %}
@@ -14,7 +17,7 @@
 {% if submit_score_login_error %}
         <div class="error center">{{ submit_score_login_error }}</div>
 {% endif %}
-<form class="register" method="post" action="/login/">
+
     <label for="username">Enter Your Username:</label>
     <input class="text-input" type="text" id="username" name="username"><br><br>
     <input class="login-button" type="submit" value="Login">

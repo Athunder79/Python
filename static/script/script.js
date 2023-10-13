@@ -1,5 +1,16 @@
 addEventListener('load', function () {
 
+  
+
+    let mobileMenu = document.querySelector('.mobile-menu');
+    let menu = document.querySelector('.menu');
+
+    check = 1;
+
+    mobileMenu.addEventListener('click', function() {
+        menu.classList.toggle('show');
+      });
+
     let table = document.getElementById('league-table');
     let headers = table.querySelectorAll('th');
 
@@ -44,11 +55,6 @@ addEventListener('load', function () {
         });
     });
 
-    let mobileMenu = document.querySelector('.mobile-menu');
-    let menu = document.querySelector('.menu');
-
-    mobileMenu.addEventListener('click', function() {
-    menu.classList.toggle('show');
-  });
+ 
 
 });

@@ -3,45 +3,75 @@
 {% block content %}
 
 <main>
-<div>   {% if my_team %}
-        <div class="container">
-            <div>
-                <div class="center my-team"><h2>Your Team</h2></div>
-                <div class="center my-team"><h3>Username: {{ my_team.team_id}}</h3></div>
-                <div class="center my-team"><h3>Team Name: {{ my_team.team_name }}</h3></div>
-                <div class="center my-team"><h3>Team Colours</h3></div>
-                <div class="center colour-cell"><span class="swatch" style="background-color: {{my_team.team_color}};"></span></div>
-                {% if player in my_team.players %}
-                <div class="center my-team"><h3 class="squad_heading">Squad</h3></div>
-                {% for player in my_team.players %}
-                <div class="center"><p class="player_list">{{player}}</p></div>
-                 {%endfor%}
-                {% endif %}             
-            </div>  
-            
-        </div>
-        {% endif %} 
-
+    {% if my_team %}
     <div class="center">
-            <table>
-                <caption><h2>Registered Teams</h2></caption>
-                <tr>
-                    <th></th>
-                    <th>TEAM NAME</th>
-                    <th>TEAM COLOURS</th>
-                    
-                </tr>
-                {% for team in allteams %}
-                <tr>
-                    <td>{{team.team_no}}</td>
-                    <td>{{team.team_name}}</td>
-                    <td class="colour-cell"><span class="swatch" style="background-color: {{team.team_color}};"></span></td>
-                </tr>
-                {% endfor %}
-          
-            </table>
-</div>
-        </div>           
+        <table class="left team">
+            <tr>
+                <th class="center-text" colspan="2">Your Team</th>
+            </tr>
+            <td>Username:</td>
+            <td>{{ my_team.team_id}}</td>
+            <tr>
+                <td>Team Name:</td>
+                <td>{{ my_team.team_name}}</td>
+            </tr>
+            <tr>
+                <td>Team Colours:</td>
+                <td><span class="swatch" style="background-color: {{my_team.team_color}};"></span></td>
+            </tr>
+            {% if my_team.players %}
+            <tr>
+                <th class="center-text" colspan="2">Team Members</th>
+            </tr>
+            {% for player in my_team.players %}
+            <tr>
+                <td class="center-text" colspan="2">{{player}}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+            
+        </table>
     </div>
+  
+    {% else %}
+    <div class="text-container">
+        <h2>Welcome to 5-Aside Leagues!</h2>
+        <p>Joining a 5-aside league offers an enjoyable football experience. With fewer players on each side, you'll
+            get more touches on the ball, enhancing your skills and tactical awareness.</p>
+        <p>Whether you're a seasoned player or just starting out, a 5-aside league provides a fun and competitive
+            platform to showcase your passion for the beautiful game.</p>
+        <p>To join a 5-aside league, please register your team or login below.</p>
+        <div><button class="home-page-button" onclick="window.location.href={{ url_for('register') }}">Register
+                Team</button></div>
+        <div><button class="home-page-button" onclick="window.location.href={{ url_for('login') }}">Login</button>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if allteams %}
+    <div class="center">
+        <table>
+            <caption>
+                <h2 class="white">Registered Teams</h2>
+            </caption>
+            <tr>
+                <th></th>
+                <th>TEAM NAME</th>
+                <th>TEAM COLOURS</th>
+
+            </tr>
+  
+            {% for team in allteams %}
+            <tr>
+                <td>{{team.team_no}}</td>
+                <td>{{team.team_name}}</td>
+                <td class="colour-cell"><span class="swatch" style="background-color: {{team.team_color}};"></span>
+                </td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+    {% endif %}
 </main>
 {% endblock %}

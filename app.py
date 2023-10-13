@@ -18,16 +18,22 @@ table_results=[]
 users=[]
 fixture_flat=[]
 my_team=[]
+names=[]
 
 
 @app.route('/', methods =['GET'])
 def index():
+    
     if 'username' in session:
         username = session['username']
         my_team=next((team for team in allteams if team.team_id == username ), None)
-       
-        return render_template('index.html', allteams=allteams, my_team=my_team)
     
+        # check if user entered squad and remove if not
+        if my_team.players == ['','','','','']:
+                my_team.players= None
+                return render_template('index.html', allteams=allteams, my_team=my_team)
+        else:
+                return render_template('index.html', allteams=allteams, my_team=my_team)
     return render_template('index.html', allteams=allteams)
 
 
@@ -175,15 +181,26 @@ def submit():
     team_color = request.form['team_color']
     players = request.form.getlist('player')
 
+    if team_name in names:
+        register_error_team_name = 'It looks like there is already a team with that name. Please register with a different team name.'
+        return render_template('register.html', register_error_team_name=register_error_team_name)
+
     if team_id in users:
-        register_error = 'It looks like you have already registered a team with this username. Please login or register with a different username.'
+        register_error = 'It looks like there is a team already registered with this username. Please login or register with a different username.'
         return render_template('login.html', register_error=register_error)
+    
+
+    
+    
 
     team_id = Teams(team_no, team_id, team_name, team_color, players)
    
     allteams.append(team_id)
 
+    # for checking usernames already registered
     users.append(team_id.team_id)
+    # for checking tean names already registered
+    names.append(team_id.team_name)
 
     # generate fixtures
     team_name_list = [team.team_name for team in allteams]
