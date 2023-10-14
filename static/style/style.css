@@ -276,6 +276,10 @@ th {
     padding: 12px;
 }
 
+.league-table-head {
+    cursor: pointer;
+}
+
 tr:nth-child(even) {
     background-color: #fafaf7c9;
 }

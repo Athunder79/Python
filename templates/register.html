@@ -7,6 +7,9 @@
     <h1 class="white">Register Your Team</h1>
 
         <form class="register" action="/submit" method="post">
+            {% if league_started_error %}
+            <p class="error"><strong>Error:</strong>{{ league_started_error }}</p>
+            {% endif %}
 
             {% if register_error_team_name %}
             <p class="error"><strong>Error:</strong>{{ register_error_team_name }}</p>
@@ -33,31 +36,6 @@
        
         <input class="login-button" type="submit" value="Submit">
     </form>
-    {% if team_id %}
-        <h2>Your Team:</h2>
-    <table>
-        <tr>
-        <td>Username:</td>
-        <td>{{ team_id.team_id }}</td>
-        </tr>
-        <tr>
-        <td>Team Name:</td>
-        <td>{{ team_id.team_name }}</td>
-        </tr>
-        <tr>
-        <td>Team Colours:</td>
-        <td><span class="team-color swatch" ></span></td>
-        </tr>
-    </table>
-    <table>
-        <tr>
-        <td>Squad:</td>
-        <td>{{ team_id.players }}</td>
-        </tr>
-    </table>
-    
-    {% endif %}
-    </table>
 </div>
 
 </div>

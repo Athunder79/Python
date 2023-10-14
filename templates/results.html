@@ -3,9 +3,6 @@
 {% block content %}
 <main>
     <div class="center">
-        {% if submit_results_error %}
-        <div class="error center">{{ submit_results_error }}</div>
-{% endif %}
     <table>
         <caption><h2 class="white">Results</h2></caption>
         <thead>
@@ -18,7 +15,9 @@
                 <th></th>
             </tr>
         </thead>
-        
+                {% if submit_results_error %}
+                <tr><td colspan="6" class="error">{{ submit_results_error }}<a href="{{ url_for('results') }}"> Try Agian</a></td></tr>
+                {% endif %}
 
                 {% for result in all_results %}
                 <tr>
@@ -48,9 +47,9 @@
                     <tr>
                         <form class="register" action="/submit_results" method="post">    
                             <td>{{ team[0] }}</td><input type="hidden" id="team_1" name="team_1" value="{{ team[0] }}">
-                            <td class="score-input"><input name="team_1_goals" id="team_1_goals" class="score-input"  type="number"></td>
+                            <td class="score-input"><input name="team_1_goals" id="team_1_goals" class="score-input"  type="number" min="0" value="0" required></td>
                             <td class="score-input">vs</td>
-                            <td class="score-input"><input id="team_2_goals" name="team_2_goals"class="score-input" type="number"></td>
+                            <td class="score-input"><input id="team_2_goals" name="team_2_goals"class="score-input" type="number" min="0" value="0" required></td>
                             <td>{{ team[1] }}</td><input type="hidden" id="team_2" name="team_2" value="{{ team[1] }}">
                             <td><input class="score-submit-button" id="score-input" type="submit" value="Submit"></td>
                         </form>

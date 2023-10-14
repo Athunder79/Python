@@ -125,19 +125,22 @@ def submit_results():
         team_2_goals = request.form['team_2_goals']
 
         Match_team_names=next((team for team in allteams if team.team_id == username ), None)
-
+        # check if team names are involved in submitted results
         if team_1 != Match_team_names.team_name and team_2 != Match_team_names.team_name:
             submit_results_error = "You cannot enter results for a game you were not involved in"
             return render_template('results.html', submit_results_error=submit_results_error)
 
         match_result = Results_list(team_1, team_1_goals, team_2, team_2_goals)
         
+        # generate list of results for results page
         global all_results
         all_results.append([match_result.team_1, int(match_result.team_1_goals), match_result.team_2, int(match_result.team_2_goals)])
         
+        # generate list of results for league table data
         global table_results 
         table_results.append([match_result.team_1, int(match_result.team_1_goals), match_result.team_2, int(match_result.team_2_goals)])
         
+        # remove submitted score from list of games
         submitted_score = [team_1, team_2]
         fixture_flat.remove(submitted_score)
        
@@ -175,6 +178,13 @@ def register():
 
 @app.route('/submit', methods=['POST'])
 def submit():
+ print(all_results)
+#  check if league has started e.g. results entered
+ if all_results:
+  league_started_error = 'Sorry you cannot register a new team as the league has already started, please check back for the next season'
+  return render_template('register.html', league_started_error=league_started_error)
+ 
+ else:
     team_no = allteams.__len__()+1
     team_id = request.form['team_id']
     team_name = request.form['team_name']
@@ -189,10 +199,6 @@ def submit():
         register_error = 'It looks like there is a team already registered with this username. Please login or register with a different username.'
         return render_template('login.html', register_error=register_error)
     
-
-    
-    
-
     team_id = Teams(team_no, team_id, team_name, team_color, players)
    
     allteams.append(team_id)
