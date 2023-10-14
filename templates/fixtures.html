@@ -3,34 +3,35 @@
 {% block content %}
 <main>
     <div class="center">
-    <table>
-        <caption><h2 class="white">Fixtures</h2></caption>
-        <thead>
-            <tr>
-                <th>Round</th>
-                <th></th>
-                <th>Team 1</th>
-                <th></th>                
-                <th>Team 2</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for week, week_fixtures in enumerate(fixture, start=1) %}
+        <table>
+            <caption>
+                <h2 class="white">Fixtures</h2>
+            </caption>
+            <thead>
+                <tr>
+                    <th>Round</th>
+                    <th></th>
+                    <th>Team 1</th>
+                    <th></th>
+                    <th>Team 2</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for week, week_fixtures in enumerate(fixture, start=1) %}
                 {% for fixture in week_fixtures %}
                 <tr>
-                    <td>{{ week }}</td>        
-                    <td><span class="swatch"></span></td>     
+                    <td>{{ week }}</td>
+                    <td><span class="swatch"></span></td>
                     <td>{{ fixture[0] }}</td>
                     <td>vs</td>
                     <td>{{ fixture[1] }}</td>
                     <td><span class="swatch"></span></td>
-                    
                 </tr>
                 {% endfor %}
-            {% endfor %}
-        </tbody>
-    </table>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </main>
 {% endblock %}

@@ -3,64 +3,73 @@
 {% block content %}
 <main>
     <div class="center">
-    <table>
-        <caption><h2 class="white">Results</h2></caption>
-        <thead>
-            <tr>
-                <th>Team 1</th>
-                <th>score</th>
-                <th></th>
-                <th>score</th>
-                <th>Team 2</th>
-                <th></th>
-            </tr>
-        </thead>
-                {% if submit_results_error %}
-                <tr><td colspan="6" class="error">{{ submit_results_error }}<a href="{{ url_for('results') }}"> Try Agian</a></td></tr>
-                {% endif %}
-
-                {% for result in all_results %}
+        <table>
+            <caption>
+                <h2 class="white">Results</h2>
+            </caption>
+            <thead>
                 <tr>
-                    <td>{{ result[0] }}</td>
-                    <td>{{ result[1] }}</td>
-                    <td>vs</td>
-                    <td>{{ result[3] }}</td>
-                    <td>{{ result[2] }}</td>
-                    <td>Score Submitted</td>                
+                    <th>Team 1</th>
+                    <th>score</th>
+                    <th></th>
+                    <th>score</th>
+                    <th>Team 2</th>
+                    <th></th>
                 </tr>
-                {% endfor %}
+            </thead>
             
-                {% for team in fixture_flat %}
-                    {% if team[0] == "Bye" or team[1] == "Bye" %}
+            {% if submit_results_error %}
+            <tr>
+                <td colspan="6" class="error">{{ submit_results_error }}<a href="{{ url_for('results') }}"> Try Agian</a></td>
+            </tr>
+            {% endif %}
 
-                <tr>
-                <form class="register" action="/submit_results" method="post">     
+            {% for result in all_results %}
+            <tr>
+                <td>{{ result[0] }}</td>
+                <td>{{ result[1] }}</td>
+                <td>vs</td>
+                <td>{{ result[3] }}</td>
+                <td>{{ result[2] }}</td>
+                <td>Score Submitted</td>
+            </tr>
+            {% endfor %}
+
+            {% for team in fixture_flat %}
+            {% if team[0] == "Bye" or team[1] == "Bye" %}
+
+            <tr>
+                <form class="register" action="/submit_results" method="post">
                     <td>{{ team[0] }}</td><input type="hidden" id="team_1" name="team_1" value="{{ team[0] }}">
-                    <td class="score-input"><input type="hidden" name="team_1_goals" id="team_1_goals" class="score-input" value="0" type="number" min="0"></td>
+                    <td class="score-input"><input type="hidden" name="team_1_goals" id="team_1_goals"
+                            class="score-input" value="0" type="number" min="0"></td>
                     <td class="score-input">vs</td>
-                    <td class="score-input"><input type="hidden" id="team_2_goals" name="team_2_goals"class="score-input" type="number" min="0" value="0"></td>
+                    <td class="score-input"><input type="hidden" id="team_2_goals" name="team_2_goals"
+                            class="score-input" type="number" min="0" value="0"></td>
                     <td>{{ team[1] }}</td><input type="hidden" id="team_2" name="team_2" value="{{ team[1] }}">
                     <td></td>
                 </form>
-                </tr>   
-                    {% else %}
-                    <tr>
-                        <form class="register" action="/submit_results" method="post">    
-                            <td>{{ team[0] }}</td><input type="hidden" id="team_1" name="team_1" value="{{ team[0] }}">
-                            <td class="score-input"><input name="team_1_goals" id="team_1_goals" class="score-input"  type="number" min="0" value="0" required></td>
-                            <td class="score-input">vs</td>
-                            <td class="score-input"><input id="team_2_goals" name="team_2_goals"class="score-input" type="number" min="0" value="0" required></td>
-                            <td>{{ team[1] }}</td><input type="hidden" id="team_2" name="team_2" value="{{ team[1] }}">
-                            <td><input class="score-submit-button" id="score-input" type="submit" value="Submit"></td>
-                        </form>
-                        </tr>   
-                    {% endif %}
-                {% endfor %}
-            
-            
-          
-        
-    </table>
-</div>
+            </tr>
+            {% else %}
+            <tr>
+                <form class="register" action="/submit_results" method="post">
+                    <td>{{ team[0] }}</td><input type="hidden" id="team_1" name="team_1" value="{{ team[0] }}">
+                    <td class="score-input"><input name="team_1_goals" id="team_1_goals" class="score-input"
+                            type="number" min="0" value="0" required></td>
+                    <td class="score-input">vs</td>
+                    <td class="score-input"><input id="team_2_goals" name="team_2_goals" class="score-input"
+                            type="number" min="0" value="0" required></td>
+                    <td>{{ team[1] }}</td><input type="hidden" id="team_2" name="team_2" value="{{ team[1] }}">
+                    <td><input class="score-submit-button" id="score-input" type="submit" value="Submit"></td>
+                </form>
+            </tr>
+            {% endif %}
+            {% endfor %}
+
+
+
+
+        </table>
+    </div>
 </main>
 {% endblock %}

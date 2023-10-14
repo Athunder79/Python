@@ -2,11 +2,12 @@
 
 {% block content %}
 <main>
-   
+
     <div class="register-team">
-    <h1 class="white">Register Your Team</h1>
+        <h1 class="white">Register Your Team</h1>
 
         <form class="register" action="/submit" method="post">
+
             {% if league_started_error %}
             <p class="error"><strong>Error:</strong>{{ league_started_error }}</p>
             {% endif %}
@@ -15,30 +16,30 @@
             <p class="error"><strong>Error:</strong>{{ register_error_team_name }}</p>
             {% endif %}
 
-            
+
             <label for="team_id">Username:</label>
             <input class="text-input" type="text" id="team_id" name="team_id" required><br><br>
-        
+
             <label for="team_name">Team Name:</label>
             <input class="text-input" type="text" id="team_name" name="team_name" required><br><br>
-        
+
             <label for="team_color">Team Colours</label>
             <input type="color" id="team_color" name="team_color" required><br><br>
-        
+
             <label for="players">Players:</label>
             <ul id="players">
-                <li><input class="text-input" type="text" name="player" ></li>
-                <li><input class="text-input" type="text" name="player" ></li>
-                <li><input class="text-input" type="text" name="player" ></li>
-                <li><input class="text-input" type="text" name="player" ></li>
-                <li><input class="text-input" type="text" name="player" ></li>
+                <li><input class="text-input" type="text" name="player"></li>
+                <li><input class="text-input" type="text" name="player"></li>
+                <li><input class="text-input" type="text" name="player"></li>
+                <li><input class="text-input" type="text" name="player"></li>
+                <li><input class="text-input" type="text" name="player"></li>
             </ul>
-       
-        <input class="login-button" type="submit" value="Submit">
-    </form>
-</div>
 
-</div>
+            <input class="login-button" type="submit" value="Submit">
+        </form>
+    </div>
+
+    </div>
 </main>
 
 {% endblock %}

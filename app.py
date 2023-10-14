@@ -125,6 +125,7 @@ def submit_results():
         team_2_goals = request.form['team_2_goals']
 
         Match_team_names=next((team for team in allteams if team.team_id == username ), None)
+
         # check if team names are involved in submitted results
         if team_1 != Match_team_names.team_name and team_2 != Match_team_names.team_name:
             submit_results_error = "You cannot enter results for a game you were not involved in"
@@ -178,7 +179,7 @@ def register():
 
 @app.route('/submit', methods=['POST'])
 def submit():
- print(all_results)
+ 
 #  check if league has started e.g. results entered
  if all_results:
   league_started_error = 'Sorry you cannot register a new team as the league has already started, please check back for the next season'

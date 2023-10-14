@@ -1,21 +1,18 @@
 addEventListener('load', function () {
 
-  
+
 
     let mobileMenu = document.querySelector('.mobile-menu');
     let menu = document.querySelector('.menu');
 
     check = 1;
 
-    mobileMenu.addEventListener('click', function() {
+    mobileMenu.addEventListener('click', function () {
         menu.classList.toggle('show');
-      });
+    });
 
     let table = document.getElementById('league-table');
     let headers = table.querySelectorAll('th');
-
-    check = 1;
-    
 
     headers.forEach(header => {
         header.addEventListener('click', () => {
@@ -54,7 +51,5 @@ addEventListener('load', function () {
 
         });
     });
-
- 
 
 });
