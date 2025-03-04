@@ -8,6 +8,16 @@
 
         <form class="register" action="/submit" method="post">
 
+            {% if league_started_error %}
+            <p class="error"><strong>Error:</strong>{{ league_started_error }}</p>
+            {% endif %}
+
+            {% if register_error_team_name %}
+            <p class="error"><strong>Error:</strong>{{ register_error_team_name }}</p>
+            {% endif %}
+
+
+
 
             <label for="team_id">Username:</label>
             <input class="text-input" type="text" id="team_id" name="team_id" required><br><br>
