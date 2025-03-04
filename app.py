@@ -68,12 +68,12 @@ def table():
                 if team_1_score > team_2_score:
                     team_1.wins += 1
                     team_2.losses += 1
-                    team_1.points += 3
+                    team_1.points += 2
 
                 elif team_1_score < team_2_score: 
                     team_1.losses += 1 
                     team_2.wins += 1 
-                    team_2.points += 3
+                    team_2.points += 2
 
                 else: 
                     team_1.draws += 1 
